@@ -50,10 +50,10 @@ public class PlayerMovement : MonoBehaviour
             player.GetComponent<Animator>().Play("HumanoidIdle");
         }
         
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-        Vector3 changeInPosition = new Vector3(horizontal, 0f, vertical);
+        // horizontal = Input.GetAxis("Horizontal");
+        // vertical = Input.GetAxis("Vertical");
+        // Vector3 changeInPosition = new Vector3(horizontal, 0f, vertical);
 
-        transform.Translate(changeInPosition * Time.deltaTime * speed);
+        // transform.Translate(changeInPosition * Time.deltaTime * speed);
     }
 }
