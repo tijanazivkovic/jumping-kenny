@@ -6,7 +6,8 @@ using System;
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject player;
-
+    [SerializeField] Rigidbody rigidbody;
+    [SerializeField] Camera cam;
     [SerializeField, Range(1f, 5f)] private float speed = 5f;
 
     private float horizontal;
@@ -14,6 +15,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        GetInput();
+        RotateCharacter();      
+    }
+
+    private void GetInput()
+    {
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
         if (Input.GetButtonDown("Walk")) {
             player.GetComponent<Animator>().Play("HumanoidWalk");
         }
@@ -25,35 +34,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump")) {
             player.GetComponent<Animator>().Play("HumanoidJumpUp");
         }
+    }
 
-        if (Input.GetButtonDown("Left")) {
-            player.GetComponent<Animator>().Play("StandQuarterTurnLeft");
+    private void RotateCharacter()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+        {
+            transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
         }
-
-        if (Input.GetButtonUp("Left")) {
-            player.GetComponent<Animator>().Play("HumanoidIdle");
-        }
-
-        if (Input.GetButtonDown("Right")) {
-            player.GetComponent<Animator>().Play("StandQuarterTurnRight");
-        }
-
-        if (Input.GetButtonUp("Right")) {
-            player.GetComponent<Animator>().Play("HumanoidIdle");
-        }
-
-        if (Input.GetButtonDown("Down")) {
-            player.GetComponent<Animator>().Play("StandHalfTurnRight");
-        }
-
-        if (Input.GetButtonUp("Down")) {
-            player.GetComponent<Animator>().Play("HumanoidIdle");
-        }
-        
-        // horizontal = Input.GetAxis("Horizontal");
-        // vertical = Input.GetAxis("Vertical");
-        // Vector3 changeInPosition = new Vector3(horizontal, 0f, vertical);
-
-        // transform.Translate(changeInPosition * Time.deltaTime * speed);
     }
 }
