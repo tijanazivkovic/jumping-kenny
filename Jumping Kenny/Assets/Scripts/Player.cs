@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, Damageable
     private int health;
     private int lives;
     private const int MAX_LIVES = 3;
-    private const int MAX_HEALTH = 5;
+    private const int MAX_HEALTH = 10;
     private int points;
 
     public void AddPoints(int pts)
