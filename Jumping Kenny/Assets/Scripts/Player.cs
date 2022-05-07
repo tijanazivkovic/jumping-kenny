@@ -72,11 +72,16 @@ public class Player : MonoBehaviour, Damageable
         return health;
     }
 
+    public int GetLives()
+    {
+        return lives;
+    }
+
     private void Awake()
     {
         points = 0;
         lives = MAX_LIVES;
-        health = MAX_HEALTH-3;
+        health = MAX_HEALTH;
     }
     // Start is called before the first frame update
     private void Start()

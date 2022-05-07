@@ -13,10 +13,33 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float vertical;
 
+    private bool disoriented;
+
+    public void Disorient(bool d)
+    {
+        disoriented = d;
+    }
+
+    public bool IsDisoriented()
+    {
+        return disoriented;
+    }
+
+    private void Awake()
+    {
+        Disorient(false);
+    }
+
     private void Update()
     {
         GetInput();
-        RotateCharacter();      
+        if (!disoriented)
+        {
+            RotateCharacter();
+        } else {
+            ContraRotateCharacter();
+        }
+        
     }
 
     private void GetInput()
@@ -42,6 +65,19 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
         {
             transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
+        }
+    }
+
+    private void ContraRotateCharacter()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+        {
+            float distx = hit.point.x - transform.position.x;
+            float x = hit.point.x - 2 * distx;
+            float distz = hit.point.z - transform.position.z;
+            float z = hit.point.z - 2 * distz;
+            transform.LookAt(new Vector3(x, transform.position.y, z));
         }
     }
 }
