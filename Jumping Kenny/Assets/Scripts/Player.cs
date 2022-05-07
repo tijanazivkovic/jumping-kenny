@@ -92,6 +92,18 @@ public class Player : MonoBehaviour, Damageable
     // Update is called once per frame
     private void Update()
     {
-        
+        if (gameObject.transform.position.y <= 0)
+        {
+            LoseLife();
+            Debug.Log("Lives: " + lives);
+            SavePointsController spc = GameObject.FindGameObjectWithTag("SPC").GetComponent<SavePointsController>();
+            if (spc != null)
+            {
+                if (gameObject != null)
+                {
+                    gameObject.transform.position = spc.GetLastSavedPoint().position;
+                }
+            }
+        }
     }
 }
