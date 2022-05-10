@@ -768,6 +768,8 @@ GameObject:
   - component: {fileID: 907122246014798576}
   - component: {fileID: 8040557947051998266}
   - component: {fileID: 727535220248076381}
+  - component: {fileID: -174289503048336466}
+  - component: {fileID: 1575793241020024936}
   m_Layer: 0
   m_Name: blackSpider
   m_TagString: Untagged
@@ -863,6 +865,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 8040557947051998266}
   movePoints: []
+--- !u!114 &-174289503048336466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907122246009082556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb29cd77b05c9c43a426cf88bb9e617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &1575793241020024936
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907122246009082556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &907122246009082656
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public class EnemyMovement : MonoBehaviour
     void MoveToRandomPoint() {
         if(n > 0) {
             int i = Random.Range(0, n);
-            Debug.Log("I: " + i);
             navMeshAgent.SetDestination(movePoints[i].position);
         }
     }
