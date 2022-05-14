@@ -19,6 +19,8 @@ public class CameraFocus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + camVec.normalized * camDist;
+        if (player != null) {
+            transform.position = player.transform.position + camVec.normalized * camDist;
+        }
     }
 }
