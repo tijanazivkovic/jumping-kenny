@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         if (Input.GetButtonDown("Walk")) {
-            player.GetComponent<Animator>().Play("HumanoidWalk");
+            player.GetComponent<Animator>().Play("HumanoidRun");
         }
 
         if (Input.GetButtonUp("Walk")) {
