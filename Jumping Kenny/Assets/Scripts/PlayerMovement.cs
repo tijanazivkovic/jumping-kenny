@@ -10,10 +10,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField, Range(1f, 5f)] private float speed = 5f;
 
+    [SerializeField, Range(1f, 50f)] private float force = 5f;
+    private CharacterController controller;
     private float horizontal;
     private float vertical;
-
     private bool disoriented;
+
+    private void Start() {
+        controller = GetComponent<CharacterController>();
+    }
 
     public void Disorient(bool d)
     {
@@ -44,19 +49,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void GetInput()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+
+        if ( (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("HumanoidMidAir") || 
+            (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("HumanoidJumpUp")) )  && 
+            Input.GetButton("Walk") ){
+            if (!disoriented) {
+                rigidbody.AddForce(player.transform.up * 0.5f * force, ForceMode.Force);
+                rigidbody.AddForce(player.transform.forward * force, ForceMode.Force);
+            } 
+            
+        }
+
         if (Input.GetButtonDown("Walk")) {
+            player.GetComponent<Animator>().SetBool("Walk", true);
             player.GetComponent<Animator>().Play("HumanoidRun");
         }
 
         if (Input.GetButtonUp("Walk")) {
+            player.GetComponent<Animator>().SetBool("Walk", false);
             player.GetComponent<Animator>().Play("HumanoidIdle");
         }
 
         if (Input.GetButtonDown("Jump")) {
             player.GetComponent<Animator>().Play("HumanoidJumpUp");
         }
+
+        
     }
 
     private void RotateCharacter()
