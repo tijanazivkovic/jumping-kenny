@@ -12,6 +12,8 @@ public class UI : MonoBehaviour
     public Image heart2;
     public Image heart3;
 
+    [SerializeField] private Image healthBar;
+
     public Image GameOverBoard;
     public Text GameOverText;
 
@@ -25,13 +27,23 @@ public class UI : MonoBehaviour
     void Update()
     {
         points.text = player.GetPoints().ToString();
+        float amount = player.GetHealth()/player.GetMaxHealth();
+        SetHealthBar(amount);
+        if (player.GetLives() == 3) {
+            heart1.enabled = true;
+            heart2.enabled = true;
+            heart3.enabled = true;
+        }
 
         if (player.GetLives() == 2) {
             heart1.enabled = false;
+            heart2.enabled = true;
+            heart3.enabled = true;
         } 
 
         if (player.GetLives() == 1) {
             heart2.enabled = false;
+            heart3.enabled = true;
         }
 
         if (player.GetLives() == 0) {
@@ -39,5 +51,9 @@ public class UI : MonoBehaviour
             GameOverBoard.enabled = true;
             GameOverText.enabled = true;
         }
+    }
+
+    public void SetHealthBar(float amount){
+        healthBar.fillAmount = amount;
     }
 }
