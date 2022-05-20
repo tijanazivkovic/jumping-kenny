@@ -24,6 +24,12 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject help;
     [SerializeField] private GameObject pauseMenu;
     private bool gamePaused = false;
+    private bool gameInProgress = false;
+
+    public void SetGameInProgress(bool p)
+    {
+        gameInProgress = p;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -68,13 +74,17 @@ public class UI : MonoBehaviour
             heart3.enabled = false;
             scorePointsGameOver.text = player.GetPoints().ToString();
             EnableGameOverMenu();
-
+            SetGameInProgress(false);
         }
+
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseGame();
-            EnablePauseMenu();
+            if (gameInProgress)
+            {
+                PauseGame();
+                EnablePauseMenu();
+            }
         }
 
     }
