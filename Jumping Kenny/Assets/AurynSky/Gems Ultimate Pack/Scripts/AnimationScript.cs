@@ -25,15 +25,18 @@ public class AnimationScript : MonoBehaviour {
     public float scaleRate;
     private float scaleTimer;
 
+    private UI ui;
+
 	// Use this for initialization
 	void Start () {
-	
+        ui = GameObject.FindGameObjectWithTag("Canvas").GetComponent<UI>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-       
+       if (!ui.GamePaused())
+       {
         
         if(isAnimated)
         {
@@ -83,6 +86,7 @@ public class AnimationScript : MonoBehaviour {
                     scaleTimer = 0;
                 }
             }
+        }
         }
 	}
 }

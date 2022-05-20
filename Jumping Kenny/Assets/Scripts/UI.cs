@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
@@ -12,15 +13,25 @@ public class UI : MonoBehaviour
     public Image heart2;
     public Image heart3;
 
-    [SerializeField] private Image healthBar;
+    public GameObject gameOverMenu;
 
-    public Image GameOverBoard;
-    public Text GameOverText;
+    public Text scorePointsGameOver;
+
+    [SerializeField] private Image healthBar;
+    [SerializeField] private Color healthBarColor;
+    
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject help;
+    [SerializeField] private GameObject pauseMenu;
+    private bool gamePaused = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        PauseGame();
+        DisableHelp();
+        DisablePauseMenu();
+        DisableGameOverMenu();
     }
 
     // Update is called once per frame
@@ -28,7 +39,14 @@ public class UI : MonoBehaviour
     {
         points.text = player.GetPoints().ToString();
         float amount = player.GetHealth()/player.GetMaxHealth();
-        SetHealthBar(amount);
+        Color color = healthBarColor;
+        if (amount <= 0.5) {
+            color = Color.yellow;
+        }
+        if (amount <= 0.3) {
+            color = Color.red;
+        }
+        SetHealthBar(amount, color);
         if (player.GetLives() == 3) {
             heart1.enabled = true;
             heart2.enabled = true;
@@ -48,12 +66,94 @@ public class UI : MonoBehaviour
 
         if (player.GetLives() == 0) {
             heart3.enabled = false;
-            GameOverBoard.enabled = true;
-            GameOverText.enabled = true;
+            scorePointsGameOver.text = player.GetPoints().ToString();
+            EnableGameOverMenu();
+
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+            EnablePauseMenu();
+        }
+
     }
 
-    public void SetHealthBar(float amount){
+    public void SetHealthBar(float amount, Color color){
         healthBar.fillAmount = amount;
+        healthBar.color = color;
+    }
+
+    public void PauseGame()
+    {
+    	Time.timeScale = 0;
+        gamePaused = true;
+    }
+
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1;
+        gamePaused = false;
+    }
+
+    public bool GamePaused()
+    {
+        return gamePaused;
+    }
+
+    public void DisableMainMenu() 
+    {
+        mainMenu.SetActive(false);
+    }
+
+    public void EnableMainMenu() 
+    {
+        mainMenu.SetActive(true);
+    }
+
+    public void QuitGame()
+    {   
+        Debug.Log("Quit game");
+        Application.Quit();
+    }
+
+    public void DisableHelp() 
+    {
+        help.SetActive(false);
+    }
+
+    public void EnableHelp() 
+    {
+        help.SetActive(true);
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void DisablePauseMenu() 
+    {
+        pauseMenu.SetActive(false);
+    }
+
+    public void EnablePauseMenu() 
+    {
+        pauseMenu.SetActive(true);
+    }
+
+    public void DisableGameOverMenu() 
+    {
+        gameOverMenu.SetActive(false);
+    }
+
+    public void EnableGameOverMenu() 
+    {
+        gameOverMenu.SetActive(true);
+    }
+
+    public void PlayAgain()
+    {
+        RestartScene();
     }
 }

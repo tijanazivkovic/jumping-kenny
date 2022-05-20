@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SPC
   - Points
+  - Canvas
   layers:
   - Default
   - TransparentFX

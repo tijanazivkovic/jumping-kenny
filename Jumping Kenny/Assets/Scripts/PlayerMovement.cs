@@ -16,8 +16,11 @@ public class PlayerMovement : MonoBehaviour
     private float vertical;
     private bool disoriented;
 
+    private UI ui;
+
     private void Start() {
         controller = GetComponent<CharacterController>();
+        ui = GameObject.FindGameObjectWithTag("Canvas").GetComponent<UI>();
     }
 
     public void Disorient(bool d)
@@ -37,12 +40,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        GetInput();
-        if (!disoriented)
+        if (!ui.GamePaused())
         {
-            RotateCharacter();
-        } else {
-            ContraRotateCharacter();
+            GetInput();
+            if (!disoriented)
+            {
+                RotateCharacter();
+            } else {
+                ContraRotateCharacter();
+            }
         }
         
     }
