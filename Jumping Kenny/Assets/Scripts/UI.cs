@@ -14,7 +14,6 @@ public class UI : MonoBehaviour
     public Image heart3;
 
     public GameObject gameOverMenu;
-
     public Text scorePointsGameOver;
 
     [SerializeField] private Image healthBar;
@@ -23,6 +22,11 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject help;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject gameFinishedMenu;
+
+    [SerializeField] public Text gameFinishedScore;
+    [SerializeField] private FinalPlatform finalPlatform;
+
     private bool gamePaused = false;
     private bool gameInProgress = false;
 
@@ -38,6 +42,7 @@ public class UI : MonoBehaviour
         DisableHelp();
         DisablePauseMenu();
         DisableGameOverMenu();
+        DisableGameFinishedMenu();
     }
 
     // Update is called once per frame
@@ -77,6 +82,13 @@ public class UI : MonoBehaviour
             SetGameInProgress(false);
         }
 
+        if (finalPlatform.touched) {
+            gameFinishedScore.text = "Final score: " + player.GetPoints().ToString();
+            PauseGame();
+            EnableGameFinishedMenu();
+            SetGameInProgress(false);
+            finalPlatform.RestartTouched();
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -160,6 +172,16 @@ public class UI : MonoBehaviour
     public void EnableGameOverMenu() 
     {
         gameOverMenu.SetActive(true);
+    }
+
+    public void DisableGameFinishedMenu() 
+    {
+        gameFinishedMenu.SetActive(false);
+    }
+
+    public void EnableGameFinishedMenu() 
+    {
+        gameFinishedMenu.SetActive(true);
     }
 
     public void PlayAgain()
