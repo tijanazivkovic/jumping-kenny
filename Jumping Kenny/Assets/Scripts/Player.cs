@@ -9,6 +9,26 @@ public class Player : MonoBehaviour, Damageable
     private const int MAX_LIVES = 3;
     private const int MAX_HEALTH = 10;
     private int points;
+    private int jump_counter;
+
+    public int GetJumpCounter() {
+        Debug.Log("Jump counter: " + jump_counter);
+        return jump_counter;
+    }
+
+    public void SetJumpCounter(int x) {
+        jump_counter = x;
+        Debug.Log("Jump counter: " + jump_counter);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Platform")
+        {
+            jump_counter = 0;
+            Debug.Log("Jump counter: " + jump_counter);
+        }
+    }
 
     public float GetMaxHealth(){
         return MAX_HEALTH;

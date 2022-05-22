@@ -18,9 +18,11 @@ public class PlayerMovement : MonoBehaviour
 
     private UI ui;
 
+
     private void Start() {
         controller = GetComponent<CharacterController>();
         ui = GameObject.FindGameObjectWithTag("Canvas").GetComponent<UI>();
+        player.GetComponent<Player>().SetJumpCounter(0);
     }
 
     public void Disorient(bool d)
@@ -77,7 +79,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Jump")) {
-            player.GetComponent<Animator>().Play("HumanoidJumpUp");
+            if (player.GetComponent<Player>().GetJumpCounter() < 2) {
+                player.GetComponent<Animator>().Play("HumanoidJumpUp");
+                player.GetComponent<Player>().SetJumpCounter(player.GetComponent<Player>().GetJumpCounter() + 1);
+            }
         }
 
         
